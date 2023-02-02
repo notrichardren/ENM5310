@@ -42,7 +42,7 @@ Students will leave this course with experience in:
 Please consult the TA regarding issues related to setting up your computing enviroment, code design, implementation, and execution.
 
 TA: Shyam Sankaran
-- Office Hours: 3 PM - 4 PM on Wednesdays & 11 AM - 12 PM on Fridays, Room 534, 3401 Walnut Street, Wing A, 5th floor (use the entrance next to Starbucks)
+- Office Hours: 3 PM - 4 PM on Wednesdays & 12 PM - 1 PM on Fridays, Room 534, 3401 Walnut Street, Wing A, 5th floor (use the entrance next to Starbucks)
 - Email: <shyamss@seas.upenn.edu>
 
 <!-- Grader: Jin Wu

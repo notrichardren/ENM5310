@@ -1,0 +1,159 @@
+<html>
+  <!-- please find the included snippets in the /_includes directory -->
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500|Playfair+Display:400,700" rel="stylesheet">
+
+  <title>Assignment #2: Optimization, Linear &amp; Logistic Regression (due 02/17)</title>
+  <meta name="description" content="Question 1 [15 Pts]:">
+
+  <link rel="canonical" href="https://www.seas.upenn.edu/~enm5310/assn2/">
+  <link rel="alternate" type="application/rss+xml" title="Data-driven Modeling and Probabilistic Scientific Computing" href="https://www.seas.upenn.edu/~enm5310/feed.xml">
+  <link rel="shortcut icon" type ="image/png" href="https://www.seas.upenn.edu/~enm5310/PredictiveIntelligence_logo.png">
+  <!-- Styles -->
+  <link rel="stylesheet" href="/~enm5310/css/foundation.css">
+  <!-- LaTeX support with MathJax -->
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+</head>
+
+
+  <body>
+    <div class="">
+  <nav class="top-bar">
+    <div class="top-bar-left">
+      <ul class="menu">
+	<li><a href="https://www.seas.upenn.edu/~enm5310"><img src="https://www.seas.upenn.edu/~enm5310/PredictiveIntelligence_logo.png" width="30" height="30"></a></li>
+	<li><a href="https://github.com/PredictiveIntelligenceLab/ENM5310"><img src="https://www.seas.upenn.edu/~enm5310/GitHub_logo.png" width="30" height="30"></a></li>
+        <li><a href="https://www.seas.upenn.edu/~enm5310">Data-driven Modeling and Probabilistic Scientific Computing, Spring 2023</a></li>
+        <li><a href="/~enm5310/syllabus">Syllabus</a></li>
+        <li><a href="/~enm5310/duedates">Due Dates</a></li>
+        <li><a href="/~enm5310/policies">Policies</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+    
+   <div class="row main">
+      <h3>Assignment #2: Optimization, Linear & Logistic Regression (due 02/17)</h3>
+<h2 id="question-1-15-pts">Question 1 [15 Pts]:</h2>
+
+<p>Suppose data \(\{x_i\}_{i = 1}^{i = n}\) is drawn from a normal distribution of <em>known</em> standard deviation \(\sigma\) and <em>unknown</em> mean \(\mu\)</p>
+<ul>
+  <li>Derive the MLE estimate \(\mu_{\text{MLE}}\)</li>
+  <li>Derive the MAP estimate \(\mu_{\text{MAP}}\) assuming the prior is also a normal distribution with mean \(\tau\) and standard deviation \(\omega\). What happens as \(n \rightarrow \infty\)?</li>
+</ul>
+
+<h2 id="question-2-30-pts">Question 2 [30 Pts]:</h2>
+
+<p>Consider a Bayesian linear regression model where the outputs \(y\) are distributed according to a Gaussian likelihood \(p(y\lvert x, \alpha, \beta, \gamma)\) corresponding to a linear model \(y = \alpha x + \beta + \epsilon\). Here \(\gamma\) represents the noise level in the observed data, i.e. it corresponds to the precision of the data likelihood. In this case, the likelihood can be further expressed as:</p>
+
+\[p(y\lvert x, \alpha, \beta, \gamma) = (\sqrt{\frac{\gamma}{2\pi}})^n\exp(-\frac{\gamma(\sum_{i=1}^n\lvert y_i - x_i\alpha - \beta\lvert^2_2)}{2})\]
+
+<p>In a Bayesian setting we would like to assume prior distributions on the unknown parameters \(\alpha\), \(\beta\) and \(\gamma\). Here we assume \(p(\alpha) = \mathcal{N}(\mu_{\alpha}, \sigma_{\alpha})\), \(p(\beta) = \mathcal{N}(\mu_{\beta}, \sigma_{\beta})\) and \(p(\gamma) = \textrm{Gam}(\tau, \omega)\) is a Gamma distribution.</p>
+
+<p>Please write down the posterior conditional distribution for each of those parameters, i.e.,</p>
+
+\[p(\alpha\lvert x, y, \beta, \gamma)\]
+
+\[p(\beta\lvert x, y, \alpha, \gamma)\]
+
+\[p(\gamma\lvert x, y, \alpha, \beta)\]
+
+<p>Comment on your results.</p>
+
+<p>[<strong>HINT</strong>: Might be easier to work with the \(\log\) of the posterior, and “complete the square” to identify the distribution]</p>
+
+<h2 id="question-3-15-pts">Question 3 [15 Pts]:</h2>
+
+<p>Consider the Bayesian linear regression model with
+\(p(y\mid x,w) = \mathcal{N}(y\mid w^{T}\phi(x),\alpha^{-1}I), \ p(w)=\mathcal{N}(w\mid 0,\beta^{-1}I),\)</p>
+
+<p>with \(\alpha = 0.5, \beta  = 0.1\). Generate a set of \(N = 400\) noisy observations by uniformly sampling</p>
+
+\[y(x) = \sin(\pi x) + \sin(2 \pi x) + \sin(5 \pi x)\quad x\in[-1,1]\]
+
+<p>Once you’ve created the observations, perturb the data with a normal distribution with standard deviation set to 10% of the data. Compute the MLE and MAP estimates for the weights \(w\) using different types and numbers of features \(\phi(x)\):</p>
+<ul>
+  <li>Monomial basis: \(\phi(x) = \{1, x, x^2, x^3, \dots, x^M\}\)</li>
+  <li>Fourier basis: \(\phi(x) = \{0, 1, \sin(\pi x), \cos(\pi x), \sin(2\pi x), \cos(2\pi x), \dots, \sin(M\pi x), \cos(M\pi x)\}\) (this case has a total of \(2M\) features)</li>
+  <li><a href="https://en.wikipedia.org/wiki/Legendre_polynomials">Legendre</a> basis: \(\{P_0(x), P_1(x), P_2(x), P_3(x), \dots, P_M(x)\}\), where \(P_0(x) = 1, P_1(x) = x\), and subsequent polynomials can be generated by the recursion \((n + 1) P_{n+1} (x) = (2n + 1) x P_n(x) - n P_{n - 1}(x).\)</li>
+</ul>
+
+<p>For the case \(M=5\), plot the data, the mean predictions corresponding to the MLE and MAP estimates for \(w\), and \(100\) samples from the predictive posterior distribution.
+Which set of features works best for this function and why?</p>
+
+<h2 id="question-4-20-pts">Question 4 [20 Pts]:</h2>
+
+<p>Write a logistic regression model to classify the letters from the <a href="https://www.nist.gov/itl/products-and-services/emnist-dataset">EMNIST</a> letters dataset. Create an 80/20 train/test split of the data. You’ve been provided a <a href="https://github.com/PredictiveIntelligenceLab/ENM5310/blob/main/assignments/assn2.ipynb">template</a> to carry this out. Fill in the suitable sections of the code.</p>
+
+<ul>
+  <li>First train your model to perform binary classification between the letters b and d. Visualize performance on the training and test sets using a confusion matrix.</li>
+  <li>Next, train your model to perform multiclass classification between b, d, p and q. Visualize performance on the training and test sets using a confusion matrix.</li>
+</ul>
+
+<h2 id="question-5-20-pts">Question 5 [20 Pts]:</h2>
+<p>Write Python routines:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">gradient_descent(f, g, x0, eta)</code> that performs an iteration of gradient descent on a given function \(f(x)\) and its gradient \(g(x)\), starting at a given point \(x_0\), and using a given step-size $\eta$.</li>
+  <li><code class="language-plaintext highlighter-rouge">newton(f, g, H, x0, eta)</code> that performs an iteration of Newton’s method on a given function \(f(x)\), its gradient \(g(x)\) and Hessian \(H(x)\), starting at a given point \(x_0\), and using a given step-size \(\eta\).</li>
+</ul>
+
+<p>Do <strong>NOT</strong> use <code class="language-plaintext highlighter-rouge">jax.grad</code> or <code class="language-plaintext highlighter-rouge">jax.hessian</code> (you need to define the gradient and Hessian functions). Use those routines in an optimization loop to optimize the following two functions:</p>
+
+<ul>
+  <li>
+\[f_1(x, y) = x^2 + 100 y^2\]
+  </li>
+  <li>
+\[f_2(x, y) = (1 - x)^2 + 100(y - x^2)^2,\]
+  </li>
+</ul>
+
+<p>Consider step-sizes \(\eta = 0.001, 0.01, 1\). Take your initial starting location as \(x_0\in(-1, 1)\). Comment on the following:</p>
+<ul>
+  <li>What is the effect of step-size on the different problems, and algorithms?</li>
+  <li>When the algorithm does converge, how many steps does it take to reach the minimum?</li>
+</ul>
+
+<p>Give suitable reasons for your observations. Plot the objective function value vs the iterate number, and a plot that shows the progress on a contour plot of the landscape. Use these to support your reasoning.</p>
+
+
+
+<!-- the pager module looks at pages in the same category -->
+
+<div class="expanded button-group">
+  
+  <a class="button expanded warning" href="/~enm5310/assn1/">previous</a>
+  
+  
+</div>
+
+
+
+    </div>
+
+        <script src="https://www.seas.upenn.edu/~enm5310/js/vendor/jquery.js"></script>
+    <script src="https://www.seas.upenn.edu/~enm5310/js/vendor/foundation.min.js"></script>
+    <script src="https://www.seas.upenn.edu/~enm5310/js/vendor/what-input.js"></script>
+    <script src="https://www.seas.upenn.edu/~enm5310/js/app.js"></script>
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112328818-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-112328818-1');
+</script>
+
+    
+  </body>
+
+</html>
